@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Προσθήκη Βιβλίου - ISBN</title>
+</head>
+<body>
+    <h1>Προσθήκη Βιβλίου </h1>
+    <h2>Αυτόματη Προσθήκη μέσω ISBN</h2>
+    <form method="post">
+        <label>ISBN:</label><br>
+        <input type="text" name="isbn" required><br><br>
+        
+        <!-- <label>Title:</label><br>
+        <input type="text" name="title" required><br><br>
+        
+        <label>Author:</label><br>
+        <input type="text" name="author" required><br><br>
+        
+        <label>Genre:</label><br>
+        <input type="text" name="genre" required><br><br> -->
+        
+        <label>Αριθμός Αντιγράφων:</label><br>
+        <input type="number" name="copies" min="1" required><br><br>
+
+        <label>Ημέρα Προσθήκης:</label><br>
+        <input type="text" name="date_added" value="{{ current_date }}" readonly><br><br>
+    
+        <button type="submit">Αποθήκευση</button>
+    </form>
+</body>
+</html>

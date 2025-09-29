@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Προσθήκη Βιβλίου - Χειροκίνητη</title>
+</head>
+<body>
+    <h1>Προσθήκη Βιβλίου </h1>
+    <h2>Χειροκίνητη Προσθήκη Στοιχείων</h2>
+    <form method="post">
+        <label>ISBN:</label><br>
+        <input type="text" name="isbn" required><br><br>
+        
+        <label>Τίτλος:</label><br>
+        <input type="text" name="title" required><br><br>
+        
+        <label>Συγγραφέας:</label><br>
+        <input type="text" name="author" required><br><br>
+
+        <label>Εκδόσεις:</label><br>
+        <input type="text" name="publisher" required><br><br>
+
+        <label>Έτος Έκδοσης:</label><br>
+        <input type="text" name="year_pub" required><br><br>
+        
+        <label>Είδος:</label><br>
+        <input type="text" name="genre" required><br><br>
+        
+        <label>Αριθμός Αντιγράφων:</label><br>
+        <input type="number" name="copies" min="1" required><br><br>
+
+        <label>Ημέρα Προσθήκης:</label><br>
+        <input type="text" name="date_added" value="{{ current_date }}" readonly><br><br>
+    
+        <button type="submit">Αποθήκευση</button>
+    </form>
+</body>
+</html>

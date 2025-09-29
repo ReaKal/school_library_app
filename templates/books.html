@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Βιβλία</title>
+</head>
+<body>
+    <h1>Βιβλία</h1>
+    <a href="{{ url_for('add_book') }}">➕ Πρόσθεσε βιβλίο</a>
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>Α/Α</th>
+            <th>ISBN</th>
+            <th>Τίτλος</th>
+            <th>Συγγραφέας</th>
+            <th>Έτος Έκδοσης</th>
+            <th>Εκδόσεις</th>
+            <th>Είδος Βιβλίου</th>
+            <th>Αριθμός Αντιγράφων</th>
+            <th>Ημερομηνία Καταχώρισης</th>
+            <th>Ενέργειες</th>
+        </tr>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.id }}</td>
+            <td>{{ book.isbn }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.year_pub }}</td>
+            <td>{{ book.publisher }}</td>
+            <td>{{ book.genre }}</td>
+            <td>{{ book.copies }}</td>
+            <td>{{ book.date_added }}</td>
+            <td>
+                <a href="{{ url_for('edit_book', id=book.id) }}">✏️ Επεξεργασία</a>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
