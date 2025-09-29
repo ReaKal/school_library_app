@@ -34,7 +34,7 @@ def get_db_connection():
 
 
 timestap = datetime.datetime.now().strftime("%Y-%m-%d")
-def export_library_db_to_tsv(db_path="library.db", output_path=f"library_{timestap}.tsv"):
+def export_library_db_to_tsv(db_path="library.db", output_path=f"library.tsv"):
     """
     Exports all tables from a SQLite database to a single TSV file.
     
