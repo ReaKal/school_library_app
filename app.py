@@ -161,6 +161,7 @@ def add_book_full_info():
                     (isbn, title, author, year_pub, publisher, genre, copies, date_added, date_updated))
         conn.commit()
         conn.close()
+        export_library_db_to_tsv()
         return redirect(url_for("books"))
 
     return render_template("add_book_full_info.html", current_date=date_added)
@@ -194,6 +195,7 @@ def add_book():
                         (isbn, title, author,  year_pub, publisher, genre, copies, date_added, date_updated))
             conn.commit()
             conn.close()
+            export_library_db_to_tsv()
             return redirect(url_for("books"))
         else:
             return redirect(url_for("add_book_full_info"))
@@ -247,6 +249,4 @@ def search_books():
 if __name__ == "__main__":
     init_db()
     export_library_db_to_tsv()
-
-    app.run(host="0.0.0.0", debug=False)
-
+    app.run(port=5000, debug=True)
