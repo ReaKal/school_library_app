@@ -2,8 +2,6 @@
 # $ conda create --name <env> --file <this file>
 # platform: linux-64
 # created-by: conda 25.1.1
-_libgcc_mutex=0.1=main
-_openmp_mutex=5.1=1_gnu
 altgraph=0.17.4=pypi_0
 blas=1.0=mkl
 blinker=1.9.0=py313h06a4308_0
