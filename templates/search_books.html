@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Αναζήτηση βιβλίου</title>
+</head>
+<body>
+    <h1>Αναζήτηση βιβλίου</h1>
+
+    <form method="GET" action="{{ url_for('search_books') }}">
+        <input type="text" name="q" placeholder="Τίτλος, συγγραφέας ή ISBN"
+               value="{{ search_query or '' }}">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if search_query %}
+        <h2>Αποτελέσματα για "{{ search_query }}"</h2>
+        <ul>
+        {% for book in books %}
+            <li>{{ book['title'] }} — {{ book['author'] }} (ISBN: {{ book['isbn'] }})</li>
+        {% else %}
+            <li>No books found.</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

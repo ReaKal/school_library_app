@@ -5,7 +5,12 @@
 </head>
 <body>
     <h1>Βιβλία</h1>
-    <a href="{{ url_for('add_book') }}">➕ Πρόσθεσε βιβλίο</a>
+    <a href="{{ url_for('add_book') }}">➕ Πρόσθεσε βιβλίο</a>    
+    <br>   
+    <a href="{{ url_for('download_books')}}" >Κατέβασε τον πίνακα</a>
+    <br>
+    <a href="{{ url_for('search_books') }}">Αναζήτηση</a>
+
     <table border="1" cellpadding="5">
         <tr>
             <th>Α/Α</th>

@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
-from flask import jsonify
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 import sqlite3
 import datetime
 import requests
 import pandas as pd
+import os
 
 app = Flask(__name__)
 DB_NAME = "library.db"
@@ -34,7 +34,10 @@ def get_db_connection():
 
 
 timestap = datetime.datetime.now().strftime("%Y-%m-%d")
-def export_library_db_to_tsv(db_path="library.db", output_path=f"library.tsv"):
+current_dir = os.getcwd()
+library_tsv = os.path.join(current_dir, "library.tsv")
+
+def export_library_db_to_tsv(db_path="library.db", output_path=library_tsv):
     """
     Exports all tables from a SQLite database to a single TSV file.
     
@@ -52,14 +55,15 @@ def export_library_db_to_tsv(db_path="library.db", output_path=f"library.tsv"):
     
     with open(output_path, "w", encoding="utf-8") as f:
         for table in tables:
-            f.write(f"## Table: {table}\n")  # header to separate tables
-            
-            # Load table into DataFrame
-            df = pd.read_sql_query(f"SELECT * FROM {table};", conn)
-            
-            # Export to TSV format (without header line breaks)
-            df.to_csv(f, sep="\t", index=False)
-            f.write("\n\n")  # space between tables
+            if table == "books":
+                f.write(f"## Table: {table}\n")  # header to separate tables
+                
+                # Load table into DataFrame
+                df = pd.read_sql_query(f"SELECT * FROM {table};", conn)
+                
+                # Export to TSV format (without header line breaks)
+                df.to_csv(f, sep="\t", index=False)
+                f.write("\n\n")  # space between tables
     
     conn.close()
     print(f"Export complete! TSV saved to: {output_path}")
@@ -79,6 +83,14 @@ def books():
     conn.close()
     return render_template("books.html", books=books)
 
+@app.route("/books/download")
+def download_books():
+    app_folder = os.path.dirname(os.path.abspath(__file__))
+    return send_from_directory(
+        directory=app_folder,
+        path="library.tsv",
+        as_attachment=True
+    )
 
 def greeklish_to_greek(text):
     mapping = {
@@ -90,7 +102,6 @@ def greeklish_to_greek(text):
     for latin, greek in sorted(mapping.items(), key=lambda x: -len(x[0])):
         text = text.replace(latin, greek)
     return text
-
 
 
 
@@ -214,7 +225,26 @@ def edit_book(id):
     conn.close()
     return render_template("edit_book.html", book=book)
 
+# ---------------------------
+# BOOK SEARCH ROUTE
+# ---------------------------
+@app.route("/books/search")
+def search_books():
+    search_query = request.args.get("q", "").strip()
+    conn = get_db_connection()
+
+    books = []
+    if search_query:
+        books = conn.execute(
+            "SELECT * FROM books WHERE title LIKE ? OR author LIKE ? OR isbn LIKE ?",
+            (f"%{search_query}%", f"%{search_query}%", f"%{search_query}%")
+        ).fetchall()
+
+    conn.close()
+    return render_template("search_books.html", books=books, search_query=search_query)
+
+
 if __name__ == "__main__":
     init_db()
     export_library_db_to_tsv()
-    app.run(port=8000, debug=True)
+    app.run(port=5000, debug=True)
