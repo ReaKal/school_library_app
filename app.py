@@ -247,4 +247,5 @@ def search_books():
 if __name__ == "__main__":
     init_db()
     export_library_db_to_tsv()
-    app.run(port=5000, debug=True)
+
+    app.run(port="0.0.0.0", debug=False)
